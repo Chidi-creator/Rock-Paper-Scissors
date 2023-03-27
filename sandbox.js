@@ -1,3 +1,21 @@
+const roundNumber = prompt("This is a game of rock-paper-scissors. What is the winning number of rounds?");
+// code below ensures that the value entered into the prompt button is coverted to a number
+let number = parseInt(roundNumber);
+
+
+
+const container = document.querySelector('#container');
+const rock = document.querySelector('#rock');
+const paper = document.querySelector('#paper');
+const scissors = document.querySelector('#scissors');
+const pSelect = document.querySelector('.player-select');
+const cSelect = document.querySelector('.computer-select');
+const winSpan = document.querySelector('.win-counter');
+const lossSpan = document.querySelector('.loss-counter');
+const drawSpan = document.querySelector('.draw-counter')
+const myAlert = document.querySelector('.score-alert');
+const alertText = document.querySelector('p')
+
 
 let winCounter = 0;
 let loseCounter = 0;
@@ -5,141 +23,193 @@ let drawCounter = 0;
 
 
 
-for (let i = 1; i <=5; i++){
-    
-const playerSelection = prompt("Let's Play Rock Paper Scissors!");
 
-let playerUpper = playerSelection.toUpperCase();
-console.log("You pick " + playerUpper);
 
-if ( playerUpper == ""){
+function clickScissors (){
 
-    alert("Please input your pick")
+pSelect.textContent = "SCISSORS"
+
+
+
 }
 
-else{
+function clickPaper (){
 
-
+    pSelect.textContent = "PAPER";
+   
     
+  
+}
 
+
+function clickRock(){
+
+pSelect.textContent = "ROCK";
+
+
+
+}
+
+// event that occurs 
+rock.addEventListener('click', function(){
+
+clickRock();
+randomize();
+gameRound();
+winSpan.textContent = winCounter;
+lossSpan.textContent = loseCounter;
+drawSpan.textContent = drawCounter;
+conditional();
+
+});
+
+//event that occurs when the scissors button is clicked
+scissors.addEventListener('click', function(){
+
+clickScissors();
+randomize();
+gameRound();
+winSpan.textContent = winCounter;
+lossSpan.textContent = loseCounter;
+drawSpan.textContent = drawCounter;
+conditional();
+});
+
+
+// event that occurs if the paper button is clicked
+paper.addEventListener('click',function(){
+
+clickPaper();
+randomize();
+gameRound();
+winSpan.textContent = winCounter;
+lossSpan.textContent = loseCounter;
+drawSpan.textContent = drawCounter;
+conditional();
+
+
+} );
+// below is the function that allows the computer pick from the option of rock paper scissirs
 function compChoice(param1, param2, param3){
 
-let gameStrings = [param1, param2, param3];
-// this line of code below tells the computer to pick randomly out of the parameters in the game strings variable
-let randomChoice = Math.floor(Math.random() * gameStrings.length);
+    let gameStrings = [param1, param2, param3];
+    // this line of code below tells the computer to pick randomly out of the parameters in the game strings variable
+    let randomChoice = Math.floor(Math.random() * gameStrings.length);
+    
+    let selectedChoice = gameStrings[randomChoice];
+    
+    
+    return selectedChoice;
+    
+     }
+    
+     // we equate some parameters to the choices in the in the game so that the computer can pick from them
+    
+     let choice1 = "ROCK";
+     let choice2 = "PAPER";
+     let choice3 = "SCISSORS";
+    
+     // We parse the computer choices set in the parameter to the function
 
-let selectedChoice = gameStrings[randomChoice];
+     function randomize(){
+     let selectedParameter = compChoice(choice1, choice2, choice3);
+     cSelect.textContent = selectedParameter;
+
+     }
+
+        // function below signify the rules of the game
+     function gameRound(){
+
+        if (pSelect.textContent === "ROCK" && cSelect.textContent === "ROCK"){
 
 
-return selectedChoice;
+            console.log("It's a draw")
+            drawCounter++;
+            
+            }
+            else if (pSelect.textContent === "PAPER" && cSelect.textContent === "PAPER"){
+            
+                console.log("It's a draw");
+                drawCounter++;
+            
+            }
+            
+            else if (pSelect.textContent === "SCISSORS" && cSelect.textContent === "SCISSORS") {
+            
+            console.log("It's a draw");
+            drawCounter++
+            
+            }
+            
+            else if (pSelect.textContent === "ROCK" && cSelect.textContent === "PAPER")
+            {
+            console.log ("You lose! Paper beats rock");
+            loseCounter++
+            
+            }
+            else if (pSelect.textContent === "PAPER" && cSelect.textContent === "SCISSORS"){
+            
+            
+            console.log("You lose! Scissors beats paper");
+            loseCounter++;
+            }
+            else if (pSelect.textContent === "SCISSORS" && cSelect.textContent === "ROCK")
+            {
+            console.log("You lose! Rock beats Scissors");
+            loseCounter++
+            }
+            else if (pSelect.textContent === "ROCK" && cSelect.textContent === "SCISSORS")
+            {
+            console.log("You win! Rock beats Scissors");
+            winCounter++;
+            }
+            else if (pSelect.textContent === "PAPER" && cSelect.textContent === "ROCK")
+            {
+            console.log("You win! Paper beats Rock")
+            winCounter++
+            }
+            else if (pSelect.textContent === "SCISSORS" && cSelect.textContent === "PAPER")
+            {
+            console.log("You Win! Scissors beats Paper")
+            winCounter++
+            }
 
- }
+     }
+    
+     //function below is to pop up the alert div signifying if you lost or won
+     function conditional(){
 
- // we equate some parameters to the choices in the in the game so that the computer can pick from them
+if (winCounter == number){
 
- let choice1 = "ROCK";
- let choice2 = "PAPER";
- let choice3 = "SCISSORS";
+  
+  
+    myAlert.classList.add('visible');
+    myAlert.classList.remove('score-alert')
+    alertText.textContent = "You won"
+    
 
- // We parse the computer choices set in the parameter to the function
- let selectedParameter = compChoice(choice1, choice2, choice3);
-
- console.log("Computer picks " + selectedParameter);
-
+  
+}
+else if (loseCounter == number){
+   
  
-function gameRound() {
+    myAlert.classList.add('visible');
+    myAlert.classList.remove('score-alert')
+alertText.textContent = "you lost"
 
 
-
-if (playerUpper === "ROCK" && selectedParameter === "ROCK"){
-
-
-console.log("It's a draw")
-drawCounter++;
-
-}
-else if (playerUpper === "PAPER" && selectedParameter === "PAPER"){
-
-    console.log("It's a draw");
-    drawCounter++;
-
-}
-
-else if (playerUpper === "SCISSORS" && selectedParameter === "SCISSORS") {
-
-console.log("It's a draw");
-drawCounter++
-
-}
-
-else if (playerUpper === "ROCK" && selectedParameter === "PAPER")
-{
-console.log ("You lose! Paper beats rock");
-loseCounter++
-
-}
-else if (playerUpper === "PAPER" && selectedParameter === "SCISSORS"){
-
-
-console.log("You lose! Scissors beats paper");
-loseCounter++;
-}
-else if (playerUpper === "SCISSORS" && selectedParameter === "ROCK")
-{
-console.log("You lose! Rock beats Scissors");
-loseCounter++
-}
-else if (playerUpper === "ROCK" && selectedParameter === "SCISSORS")
-{
-console.log("You win! Rock beats Scissors");
-winCounter++;
-}
-else if (playerUpper === "PAPER" && selectedParameter === "ROCK")
-{
-console.log("You win! Paper beats Rock")
-winCounter++
-}
-else if (playerUpper === "SCISSORS" && selectedParameter === "PAPER")
-{
-console.log("You Win! Scissors beats Paper")
-winCounter++
-}
-else{
-
-    console.log("Wrong Parameters")
-}
-
+   
 
 
 }
-
-
-
-
-
-
+else {
+myAlert.classList.add('score-alert');
+myAlert.classList.remove('visible');
 
 }
+     }
+
+    
 
 
-
-
-gameRound();
-
-
-}
- 
-if (loseCounter > winCounter && winCounter > drawCounter){
-
-    console.log("YOU LOSE THIS ROUND!");
-}
-else if (winCounter > drawCounter && winCounter > loseCounter){
-
-    console.log("YOU WIN THIS ROUND!");
-}
-else if ( drawCounter > winCounter && drawCounter > loseCounter){
-    alert("The draws for this round is more than the wins and losses,refresh the page ");
-}
-
-
-console.log(" Scores for this round: " + "Wins: " + winCounter + " Draws: " + drawCounter + " Losses: " + loseCounter);
+     
